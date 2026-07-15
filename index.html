@@ -412,7 +412,6 @@
             display: block;
         }
 
-        /* убираем всё лишнее на телефонах */
         @media (max-width: 460px) {
             .app-container {
                 padding: 12px 12px 16px;
@@ -438,7 +437,7 @@
     <div class="app-container" id="app">
         <!-- header -->
         <div class="header">
-            <h1>🎧 Офлайн</h1>
+            <h1>🎧 PLAYer</h1>
             <span class="badge" id="trackCount">0 треков</span>
         </div>
 
@@ -901,6 +900,13 @@
 
         // === init ===
         loadPlaylistFromDB();
+
+        // === Service Worker ===
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/music/sw.js')
+                .then(reg => console.log('✅ SW зарегистрирован:', reg))
+                .catch(err => console.error('❌ Ошибка SW:', err));
+        }
     })();
     </script>
 </body>
