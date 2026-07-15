@@ -2,10 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>🎵 PLAYer</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#14141c">
+    <meta name="theme-color" content="#0b0b0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
@@ -16,13 +16,23 @@
             font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
         }
 
-        body {
-            background: #0b0b0f;
+        html, body {
+            width: 100%;
             min-height: 100vh;
+            min-height: 100dvh;
+            background: #0b0b0f;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        body {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 16px;
+            flex-direction: column;
+            padding: 0;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             -webkit-user-select: none;
@@ -30,13 +40,13 @@
 
         .app-container {
             width: 100%;
-            max-width: 420px;
-            background: #14141c;
-            border-radius: 48px;
-            padding: 28px 20px 36px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.05);
-            border: 1px solid #2a2a35;
-            transition: all 0.2s;
+            height: 100vh;
+            height: 100dvh;
+            background: #0b0b0f;
+            padding: 20px 16px 24px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         /* header */
@@ -44,8 +54,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 18px;
-            border-bottom: 1px solid #262631;
+            padding: 4px 0 14px 0;
+            flex-shrink: 0;
+            border-bottom: 1px solid #1a1a28;
         }
 
         .header h1 {
@@ -59,25 +70,26 @@
         }
 
         .badge {
-            background: #2a2a3a;
+            background: #1a1a28;
             padding: 6px 14px;
             border-radius: 100px;
             font-size: 12px;
             font-weight: 600;
             color: #a5a5c0;
-            border: 1px solid #3e3e52;
+            border: 1px solid #2a2a3a;
             white-space: nowrap;
         }
 
         .install-banner {
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            margin: 16px 0 14px;
-            padding: 12px 18px;
-            border-radius: 20px;
+            margin: 12px 0 12px;
+            padding: 10px 16px;
+            border-radius: 16px;
             display: none;
             align-items: center;
             justify-content: space-between;
             animation: fadeIn 0.3s;
+            flex-shrink: 0;
         }
 
         .install-banner.show {
@@ -110,18 +122,19 @@
 
         /* upload */
         .upload-area {
-            margin: 18px 0 18px;
-            background: #1c1c28;
-            border-radius: 32px;
-            padding: 18px 18px 14px;
-            border: 1px dashed #4b4b66;
+            margin: 14px 0 14px;
+            background: #14141e;
+            border-radius: 20px;
+            padding: 16px 18px 12px;
+            border: 1px dashed #3a3a50;
             transition: 0.2s;
+            flex-shrink: 0;
         }
 
         .upload-area:hover,
         .upload-area.dragover {
             border-color: #818cf8;
-            background: #22223a;
+            background: #1a1a2e;
         }
 
         .upload-label {
@@ -140,38 +153,38 @@
         }
 
         .upload-icon {
-            font-size: 24px;
+            font-size: 22px;
             line-height: 1;
         }
 
         .file-hint {
-            font-size: 12px;
-            color: #6f6f8b;
+            font-size: 11px;
+            color: #5f5f7a;
             text-align: center;
-            margin-top: 8px;
+            margin-top: 6px;
             letter-spacing: 0.3px;
         }
 
         /* playlist */
         .playlist {
-            margin: 22px 0 18px;
-            max-height: 320px;
+            flex: 1;
             overflow-y: auto;
+            margin: 12px 0 14px;
             padding-right: 4px;
             -webkit-overflow-scrolling: touch;
+            min-height: 0;
         }
 
         .playlist::-webkit-scrollbar {
-            width: 4px;
+            width: 3px;
         }
 
         .playlist::-webkit-scrollbar-track {
-            background: #1c1c28;
-            border-radius: 10px;
+            background: transparent;
         }
 
         .playlist::-webkit-scrollbar-thumb {
-            background: #4b4b66;
+            background: #3a3a50;
             border-radius: 10px;
         }
 
@@ -179,11 +192,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 16px;
-            background: #1a1a26;
-            border-radius: 20px;
-            margin-bottom: 10px;
-            border: 1px solid #282836;
+            padding: 12px 14px;
+            background: #14141e;
+            border-radius: 16px;
+            margin-bottom: 8px;
+            border: 1px solid #1e1e30;
             transition: all 0.15s;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
@@ -195,14 +208,14 @@
 
         .track-item.active {
             border-color: #818cf8;
-            background: #22223f;
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+            background: #1a1a32;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.08);
         }
 
         .track-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             flex: 1;
             min-width: 0;
         }
@@ -210,15 +223,15 @@
         .track-name {
             font-weight: 600;
             color: #e8e8f0;
-            font-size: 15px;
+            font-size: 14px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .track-size {
-            font-size: 12px;
-            color: #7a7a9a;
+            font-size: 11px;
+            color: #6a6a8a;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -226,7 +239,7 @@
 
         .track-actions {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             flex-shrink: 0;
             margin-left: 8px;
         }
@@ -234,17 +247,17 @@
         .track-actions button {
             background: transparent;
             border: none;
-            color: #9a9ab8;
-            font-size: 18px;
-            width: 36px;
-            height: 36px;
+            color: #8a8aaa;
+            font-size: 16px;
+            width: 32px;
+            height: 32px;
             border-radius: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: 0.15s;
-            background: #262636;
+            background: #1e1e30;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -252,29 +265,24 @@
             transform: scale(0.9);
         }
 
-        .track-actions button:hover {
-            background: #3a3a52;
-            color: #ffffff;
-        }
-
-        .track-actions .delete-btn:hover {
+        .track-actions .delete-btn:active {
             background: #4a2a3a;
             color: #ff7b89;
         }
 
         /* player */
         .player {
-            background: #1a1a28;
-            border-radius: 40px;
-            padding: 16px 18px 20px;
-            margin-top: 8px;
-            border: 1px solid #2e2e42;
+            background: #12121c;
+            border-radius: 28px;
+            padding: 14px 16px 18px;
+            border: 1px solid #1e1e30;
+            flex-shrink: 0;
         }
 
         .player-top {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         .now-playing {
@@ -283,16 +291,16 @@
         }
 
         .now-playing .label {
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #6a6a8a;
+            letter-spacing: 0.8px;
+            color: #5a5a7a;
         }
 
         .now-playing .track-title {
             font-weight: 600;
             color: #f0f0ff;
-            font-size: 16px;
+            font-size: 15px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -301,23 +309,23 @@
         .controls {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .controls button {
-            background: #2c2c42;
+            background: #1e1e30;
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 40px;
-            font-size: 22px;
-            color: #d0d0ea;
+            font-size: 20px;
+            color: #c0c0dd;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: 0.12s;
-            border: 1px solid #3d3d58;
+            border: 1px solid #2a2a40;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -329,10 +337,10 @@
             background: #4f46e5;
             color: white;
             border-color: #6366f1;
-            box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
-            width: 52px;
-            height: 52px;
-            font-size: 28px;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.3);
+            width: 48px;
+            height: 48px;
+            font-size: 26px;
         }
 
         .controls .play-btn:active {
@@ -341,15 +349,15 @@
         }
 
         .progress-area {
-            margin-top: 14px;
+            margin-top: 12px;
         }
 
         .progress-bar {
             width: 100%;
-            height: 6px;
+            height: 4px;
             -webkit-appearance: none;
             appearance: none;
-            background: #2c2c42;
+            background: #1e1e30;
             border-radius: 10px;
             outline: none;
             transition: 0.1s;
@@ -358,67 +366,69 @@
         .progress-bar::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 20px;
             background: #818cf8;
-            box-shadow: 0 0 16px #4f46e5;
+            box-shadow: 0 0 20px #4f46e5;
             cursor: pointer;
-            border: 2px solid #14141c;
+            border: 2px solid #0b0b0f;
         }
 
         .time-labels {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
-            color: #7a7a9a;
-            margin-top: 6px;
+            font-size: 11px;
+            color: #6a6a8a;
+            margin-top: 4px;
             font-weight: 500;
         }
 
         .empty-state {
             text-align: center;
-            padding: 40px 10px 20px;
+            padding: 60px 10px 20px;
             color: #5f5f7a;
         }
 
         .empty-state span {
-            font-size: 52px;
+            font-size: 48px;
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .empty-state p {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 400;
         }
 
-        /* loading skeleton */
         .loading-spinner {
             display: none;
             text-align: center;
             padding: 20px;
-            color: #7a7a9a;
-            font-size: 14px;
+            color: #6a6a8a;
+            font-size: 13px;
         }
         .loading-spinner.show {
             display: block;
         }
 
+        /* убираем всё лишнее на телефонах */
         @media (max-width: 460px) {
             .app-container {
-                padding: 20px 14px 28px;
-                border-radius: 32px;
+                padding: 12px 12px 16px;
             }
             .controls button {
-                width: 38px;
-                height: 38px;
-                font-size: 18px;
+                width: 36px;
+                height: 36px;
+                font-size: 17px;
             }
             .controls .play-btn {
-                width: 46px;
-                height: 46px;
-                font-size: 24px;
+                width: 44px;
+                height: 44px;
+                font-size: 22px;
+            }
+            .track-item {
+                padding: 10px 12px;
             }
         }
     </style>
@@ -538,17 +548,6 @@
             });
         }
 
-        function clearAllTracks() {
-            return new Promise((resolve, reject) => {
-                if (!db) { reject('DB not open'); return; }
-                const tx = db.transaction(STORE_NAME, 'readwrite');
-                const store = tx.objectStore(STORE_NAME);
-                const request = store.clear();
-                request.onsuccess = () => resolve();
-                request.onerror = () => reject(request.error);
-            });
-        }
-
         // === state ===
         let playlist = [];
         let currentIndex = -1;
@@ -590,7 +589,6 @@
         }
 
         function getTrackNameFromFile(file) {
-            // Remove extension for display
             return file.name.replace(/\.[^.]+$/, '');
         }
 
@@ -598,7 +596,6 @@
         function renderPlaylist() {
             trackCountEl.textContent = playlist.length + ' треков';
 
-            // remove all track items
             const items = playlistEl.querySelectorAll('.track-item');
             items.forEach(el => el.remove());
 
@@ -826,7 +823,6 @@
                 if (playlist.length > 0) {
                     currentIndex = 0;
                     renderPlaylist();
-                    // don't autoplay, wait for user
                 } else {
                     renderPlaylist();
                 }
